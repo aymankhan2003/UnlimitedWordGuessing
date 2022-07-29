@@ -1,0 +1,48 @@
+import random
+from random import randint
+
+def read_file(filename):
+    with open(filename, "r") as file:
+        words = []
+        for line in file:
+            for word in line.split():
+                words.append(word.lower())
+        return words
+    
+def random_word(words):
+    newWord = str(words[randint(0, len(words) - 1)])
+    return newWord
+    
+def checkguess(newWord):
+    rightanswer = list(newWord)
+    
+    wrong_guess = []
+    board = []
+    for n in rightanswer:
+        board.append('_')
+    while board != rightanswer:
+        guess = input('Guess a letter: ')
+        if guess in board:
+            print('You already guessed this letter! Try another letter.')
+        elif guess in wrong_guess:
+            print('You already guessed this letter! Try another letter.')
+        else:
+            if guess in rightanswer:
+                print('Good Guess!')
+                for i in range (len(rightanswer)):
+                    if guess == rightanswer[i]:
+                        board[i] = guess
+                        print(board)
+            else:
+                wrong_guess.append(guess)
+                print('Wrong! These are the wrong letters you guessed: ')
+                print(wrong_guess)
+                print(board)
+            
+    print('Yay! You won.')
+    print('The word was: ' + newWord)
+    
+if __name__ == "__main__":
+    wordslist = read_file('Words.txt')
+    word = random_word(wordslist)
+    checkguess(word)
